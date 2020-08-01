@@ -63,6 +63,7 @@ MemeField::MemeField(int nMemes)
 
 void MemeField::Draw(Graphics& gfx) const
 {
+	gfx.DrawRect(GetRect(), SpriteCodex::baseColor);
 	Vei2 gridPos;
 	for (gridPos.y = 0; gridPos.y < height; gridPos.y++)
 	{
@@ -71,6 +72,11 @@ void MemeField::Draw(Graphics& gfx) const
 			TileAt(gridPos).Draw(gridPos * SpriteCodex::tileSize, gfx);
 		}
 	}
+}
+
+RectI MemeField::GetRect() const
+{
+	return RectI(0, width * SpriteCodex::tileSize, 0, height * SpriteCodex::tileSize);
 }
 
 MemeField::Tile& MemeField::TileAt(const Vei2& gridPos)
