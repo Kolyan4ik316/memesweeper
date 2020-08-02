@@ -181,6 +181,7 @@ void MemeField::OnRevealClick(const Vei2& screenPos)
 			if (tile.HasMeme())
 			{
 				isFucked = true;
+				sndLose.Play();
 			}
 		}
 	}
@@ -235,4 +236,22 @@ const MemeField::Tile& MemeField::TileAt(const Vei2& gridPos) const
 Vei2 MemeField::ScreenToGrid(const Vei2& screenPos)
 {
 	return (screenPos - topLeft) / SpriteCodex::tileSize;
+}
+
+bool MemeField::GameIsWon() const
+{
+	for (const Tile& t : field)
+	{
+		if ((t.HasMeme() && !t.IsFlagged()) ||
+			(!t.HasMeme() && !t.IsRevealed()))
+		{
+			return false;
+		}
+	}
+	return true;
+}
+
+bool MemeField::GameIsLost() const
+{
+	return isFucked;
 }
