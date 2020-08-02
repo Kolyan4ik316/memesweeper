@@ -41,6 +41,17 @@ void MemeField::Tile::Draw(const Vei2& screenPos, Graphics& gfx) const
 	}
 }
 
+void MemeField::Tile::Reveal()
+{
+	assert(state == State::Hidden);
+	state = State::Revealed;
+}
+
+bool MemeField::Tile::IsRevealed() const
+{
+	return state == State::Revealed;
+}
+
 MemeField::MemeField(int nMemes)
 {
 	assert(nMemes > 0 && nMemes < width* height);
@@ -58,6 +69,15 @@ MemeField::MemeField(int nMemes)
 		} while (TileAt(spawnPos).HasMeme());
 
 		TileAt(spawnPos).SpawnMeme();
+	}
+
+	for (int i = 0; i < 120; i++)
+	{
+		const Vei2 gridPos = { xDist(rng), yDist(rng) };
+		if (!TileAt(gridPos).IsRevealed())
+		{
+			TileAt(gridPos).Reveal();
+		}
 	}
 }
 
