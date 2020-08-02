@@ -26,7 +26,7 @@ Game::Game( MainWindow& wnd )
 	:
 	wnd( wnd ),
 	gfx( wnd ),
-	field(gfx.GetRect().GetCenter(),20)
+	field(gfx.GetRect().GetCenter(),4)
 {
 }
 
@@ -40,23 +40,26 @@ void Game::Go()
 
 void Game::UpdateModel()
 {
-	while (!wnd.mouse.IsEmpty())
+	if (!field.GameIsWon())
 	{
-		const auto e = wnd.mouse.Read();
-		if (e.GetType() == Mouse::Event::Type::LPress)
+		while (!wnd.mouse.IsEmpty())
 		{
-			const Vei2 mousePos = e.GetPos();
-			if (field.GetRect().Contains(mousePos))
+			const auto e = wnd.mouse.Read();
+			if (e.GetType() == Mouse::Event::Type::LPress)
 			{
-				field.OnRevealClick(mousePos);
+				const Vei2 mousePos = e.GetPos();
+				if (field.GetRect().Contains(mousePos))
+				{
+					field.OnRevealClick(mousePos);
+				}
 			}
-		}
-		else if(e.GetType() == Mouse::Event::Type::RPress)
-		{
-			const Vei2 mousePos = e.GetPos();
-			if (field.GetRect().Contains(mousePos))
+			else if (e.GetType() == Mouse::Event::Type::RPress)
 			{
-				field.OnFlagClick(mousePos);
+				const Vei2 mousePos = e.GetPos();
+				if (field.GetRect().Contains(mousePos))
+				{
+					field.OnFlagClick(mousePos);
+				}
 			}
 		}
 	}
