@@ -22,9 +22,11 @@ private:
 		bool IsRevealed() const;
 		void ToggleFlag();
 		bool IsFlagged() const;
+		void SetNeighborMemeCount(int memeCount);
 	private:
 		State state = State::Hidden;
 		bool hasMeme = false;
+		int nNeighborMemes = -1;
 	};
 public:
 	MemeField(int nMemes);
@@ -32,6 +34,7 @@ public:
 	RectI GetRect() const;
 	void OnRevealClick(const Vei2& screenPos);
 	void OnFlagClick(const Vei2& screenPos);
+	int CountNeighborMeme(const Vei2& gridPos);
 private:
 	Tile& TileAt(const class Vei2& gridPos);
 	const Tile& TileAt(const class Vei2& gridPos) const;
