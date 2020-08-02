@@ -17,7 +17,7 @@ private:
 	public:
 		void SpawnMeme();
 		bool HasMeme() const;
-		void Draw(const Vei2& screenPos ,Graphics& gfx) const;
+		void Draw(const Vei2& screenPos, bool fucked, Graphics& gfx) const;
 		void Reveal();
 		bool IsRevealed() const;
 		void ToggleFlag();
@@ -42,5 +42,6 @@ private:
 private:
 	static constexpr int width = 20;
 	static constexpr int height = 16;
+	bool isFucked = false;
 	Tile field[width * height];
 };
