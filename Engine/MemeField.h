@@ -37,7 +37,8 @@ private:
 		int nNeighborMemes = -1;
 	};
 public:
-	MemeField(const Vei2& center, int nMemes);
+	MemeField(const Vei2& center, int width, int height, int nMemes);
+	~MemeField();
 	void Draw(Graphics& gfx) const;
 	RectI GetRect() const;
 	void OnRevealClick(const Vei2& screenPos);
@@ -51,12 +52,12 @@ private:
 	Vei2 ScreenToGrid(const Vei2& screenPos);
 	bool GameIsWon() const;
 private:
-	static constexpr int width = 20;
-	static constexpr int height = 16;
+	int width;
+	int height;
 	static constexpr int borderThickness = 10;
 	static constexpr Color borderColor = Colors::Blue;
 	Sound sndLose = Sound(L"spayed.wav");
 	Vei2 topLeft;
 	State state = State::Memeing;
-	Tile field[width * height];
+	Tile* field = nullptr;
 };
